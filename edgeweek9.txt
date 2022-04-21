@@ -161,7 +161,7 @@ interfaces {
             public-key F5SjKDlaZmI3/tCOwgf5wIb8SrO/NtqZ7/+fp/VpjDA=
         }
         port 51820
-        private-key cBUpw5RPS4gJpKaYDwFjbhxx2Cltl5xgNiaBZ529blA=
+        private-key 
     }
 }
 nat {
@@ -257,9 +257,9 @@ system {
     }
     host-name edge01-spencer
     login {
-        user vyos {
+        user spencer {
             authentication {
-                encrypted-password $6$N5jt.AcMGT8Ih/xZ$YsPgXDCTDLcMlBahsdRn5CV78NAO/nlcTSpBYpnbDUQ0ti.XbmjBqM/zb7pU3/MBUR8srAqwC251rB7Dt5KNH.
+                encrypted-password 
             }
         }
     }
