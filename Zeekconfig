@@ -1,0 +1,322 @@
+#### ZEEK IDS configuration file ####
+# GMCYBER:  Modified legacy content pack to use json
+# CREDITS TO:  https://marketplace.graylog.org/addons/5e6cf3c6-7bdc-4a2c-bdca-441407e4a016
+#### MODULES ####
+module(load="imfile")
+
+#### Templates ####
+
+template(name="Zeek_Json"
+  type="list") {
+    constant(value="{")
+      constant(value="\"@timestamp\":\"")       property(name="timereported" dateFormat="rfc3339")
+      constant(value="\",\"type\":\"syslog_json")
+      constant(value="\",\"tag\":\"")           property(name="syslogtag" format="json")
+      constant(value="\",\"relayhost\":\"")     property(name="fromhost")
+      constant(value="\",\"relayip\":\"")       property(name="fromhost-ip")
+      constant(value="\",\"logsource\":\"")     property(name="source")
+      constant(value="\",\"hostname\":\"")      property(name="hostname" caseconversion="lower")
+      constant(value="\",\"program\":\"")      property(name="programname")
+      constant(value="\",\"priority\":\"")      property(name="pri")
+      constant(value="\",\"severity\":\"")      property(name="syslogseverity")
+      constant(value="\",\"facility\":\"")      property(name="syslogfacility")
+      constant(value="\",\"severity_label\":\"")   property(name="syslogseverity-text")
+      constant(value="\",\"facility_label\":\"")   property(name="syslogfacility-text")
+      constant(value="\",\"message\":\"")       property(name="rawmsg" format="json")
+      constant(value="\",\"end_msg\":\"")
+    constant(value="\"}\n")
+}
+#### RULES for where to send Log Files ####
+# Send messages over TCP using the ZEEK_Logs template
+ruleset(name="sendZEEKLogs"){
+    action (type="omfwd" protocol="tcp" target="172.16.200.10" port="13514" TCP_FrameDelimiter="0" Keepalive="on"template="Zeek_Json")
+}
+
+#### Inputs ####
+# Comment out sections to not send specifc logs
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/notice.log"
+    Tag="zeek_notice"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/weird.log"
+    Tag="zeek_weird"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/conn.log"
+    Tag="zeek_conn"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/dns.log"
+    Tag="zeek_dns"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/dhcp.log"
+    Tag="zeek_dhcp"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/http.log"
+    Tag="zeek_http"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/software.log"
+    Tag="zeek_software"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/tunnel.log"
+    Tag="zeek_tunnel"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/smtp.log"
+    Tag="zeek_smtp"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/zeekker.log"
+    Tag="zeek_zeekker"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/capture_loss.log"
+    Tag="zeek_capture_loss"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/cluster.log"
+    Tag="zeek_cluster"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/dce_rpc.log"
+    Tag="zeek_dce_rpc"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/files.log"
+    Tag="zeek_files"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/ftp.log"
+    Tag="zeek_ftp"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/irc.log"
+    Tag="zeek_irc"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/kerberos.log"
+    Tag="zeek_kerberos"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/mysql.log"
+    Tag="zeek_mysql"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/ntlm.log"
+    Tag="zeek_ntlm"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/packet_filter.log"
+    Tag="zeek_packet_filter"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/pe.log"
+    Tag="zeek_pe"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/radius.log"
+    Tag="zeek_radius"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/reporter.log"
+    Tag="zeek_reporter"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/rdp.log"
+    Tag="zeek_rdp"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/sip.log"
+    Tag="zeek_sip"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/smb_files.log"
+    Tag="zeek_smb_files"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/smb_mapping.log"
+    Tag="zeek_smb_mapping"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/snmp.log"
+    Tag="zeek_snmp"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/ssh.log"
+    Tag="zeek_ssh"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/ssl.log"
+    Tag="zeek_ssl"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/stats.log"
+    Tag="zeek_stats"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
+
+input (
+    type="imfile"
+    File="/opt/zeek/logs/current/x509.log"
+    Tag="zeek_x509"
+    Facility="local7"
+    Severity="info"
+    RuleSet="sendZEEKLogs"
+)
